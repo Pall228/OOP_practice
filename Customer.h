@@ -1,34 +1,28 @@
 #pragma once
+#include "Person.h"
 #include <string>
-class Customer {
+
+class Customer : public Person {
 private:
-    int id;
-    std::string surname;
-    std::string name;
-    std::string patronymic;
-    std::string address;
-    std::string creditCardNumber;
+    std::string cardNumber;
     double balance;
+
 public:
     Customer();
-    Customer(int id, const std::string& surname, const std::string& name,
+    Customer(const std::string& surname, const std::string& name,
              const std::string& patronymic, const std::string& address,
-             const std::string& creditCardNumber, double balance);
-    Customer(const Customer& other);
-    ~Customer();
-    int getId() const;
-    std::string getSurname() const;
-    std::string getName() const;
-    std::string getPatronymic() const;
-    std::string getAddress() const;
-    std::string getCreditCardNumber() const;
-    double getBalance() const;
-    void setId(int id);
-    void setSurname(const std::string& surname);
-    void setName(const std::string& name);
-    void setPatronymic(const std::string& patronymic);
-    void setAddress(const std::string& address);
-    void setCreditCardNumber(const std::string& creditCardNumber);
-    void setBalance(double balance);
-    void display() const;
+             const std::string& card = "", double bal = 0.0);
+
+    void setCardNumber(const std::string& cn) { cardNumber = cn; }
+    void setBalance(double b) { balance = b; }
+
+    std::string getCardNumber() const { return cardNumber; }
+    double getBalance() const { return balance; }
+
+    void display() const override;
+    bool operator==(const Customer& other) const;
+
+    friend std::istream& operator>>(std::istream& in, Customer& c);
 };
+
+std::ostream& operator<<(std::ostream& os, const Customer& c);

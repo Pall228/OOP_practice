@@ -1,58 +1,47 @@
 #include "Customer.h"
 #include <iostream>
-Customer::Customer() {
-    id = 0;
-    surname = "";
-    name = "";
-    patronymic = "";
-    address = "";
-    creditCardNumber = "";
-    balance = 0.0;
-    std::cout << "Конструктор за замовчуванням викликано" << std::endl;
-}
-Customer::Customer(int id, const std::string& surname, const std::string& name,
-                   const std::string& patronymic, const std::string& address,
-                   const std::string& creditCardNumber, double balance) {
-    this->id = id;
-    this->surname = surname;
-    this->name = name;
-    this->patronymic = patronymic;
-    this->address = address;
-    this->creditCardNumber = creditCardNumber;
-    this->balance = balance;
-    std::cout << "Параметризований конструктор викликано" << std::endl;
-}
-Customer::Customer(const Customer& other) {
-    id = other.id;
-    surname = other.surname;
-    name = other.name;
-    patronymic = other.patronymic;
-    address = other.address;
-    creditCardNumber = other.creditCardNumber;
-    balance = other.balance;
-    std::cout << "Конструктор копіювання викликано" << std::endl;
-}
-Customer::~Customer() {
-    std::cout << "Деструктор викликано для клієнта ID=" << id << std::endl;
-}
-int Customer::getId() const { return id; }
-std::string Customer::getSurname() const { return surname; }
-std::string Customer::getName() const { return name; }
-std::string Customer::getPatronymic() const { return patronymic; }
-std::string Customer::getAddress() const { return address; }
-std::string Customer::getCreditCardNumber() const { return creditCardNumber; }
-double Customer::getBalance() const { return balance; }
-void Customer::setId(int id) { this->id = id; }
-void Customer::setSurname(const std::string& surname) { this->surname = surname; }
-void Customer::setName(const std::string& name) { this->name = name; }
-void Customer::setPatronymic(const std::string& patronymic) { this->patronymic = patronymic; }
-void Customer::setAddress(const std::string& address) { this->address = address; }
-void Customer::setCreditCardNumber(const std::string& creditCardNumber) { this->creditCardNumber = creditCardNumber; }
-void Customer::setBalance(double balance) { this->balance = balance; }
+#include <limits>
+
+Customer::Customer() : balance(0.0) {}
+
+Customer::Customer(const std::string& s, const std::string& n,
+                   const std::string& p, const std::string& a,
+                   const std::string& card, double bal)
+    : Person(s, n, p, a), cardNumber(card), balance(bal) {}
+
 void Customer::display() const {
-    std::cout << "ID: " << id << "\n"
-              << "ПІБ: " << surname << " " << name << " " << patronymic << "\n"
-              << "Адреса: " << address << "\n"
-              << "Номер кредитної картки: " << creditCardNumber << "\n"
-              << "Баланс: " << balance << " грн\n\n";
+    Person::display();
+    std::cout << "Номер картки: " << cardNumber << "\n"
+              << "Баланс: " << balance << "\n";
+}
+
+bool Customer::operator==(const Customer& other) const {
+    return surname == other.surname &&
+           name == other.name &&
+           patronymic == other.patronymic &&
+           address == other.address &&
+           cardNumber == other.cardNumber &&
+           balance == other.balance;
+}
+
+std::ostream& operator<<(std::ostream& os, const Customer& c) {
+    c.display();
+    return os;
+}
+
+std::istream& operator>>(std::istream& in, Customer& c) {
+    std::cout << "Введіть прізвище: ";
+    std::getline(in >> std::ws, c.surname);
+    std::cout << "Введіть ім'я: ";
+    std::getline(in >> std::ws, c.name);
+    std::cout << "Введіть по батькові: ";
+    std::getline(in >> std::ws, c.patronymic);
+    std::cout << "Введіть адресу: ";
+    std::getline(in >> std::ws, c.address);
+    std::cout << "Введіть номер картки: ";
+    std::getline(in >> std::ws, c.cardNumber);
+    std::cout << "Введіть баланс: ";
+    in >> c.balance;
+    in.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    return in;
 }
