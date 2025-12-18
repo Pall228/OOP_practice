@@ -20,7 +20,7 @@ public:
     double getBalance() const { return balance; }
 
     void display() const override;
-    bool operator==(const Customer& other) const;
+    void showRole() const override;  // реалізація суто віртуального методу
 
     friend std::istream& operator>>(std::istream& in, Customer& c);
 };

@@ -24,6 +24,10 @@ void Seller::display() const {
     std::cout << "\n";
 }
 
+void Seller::showRole() const {
+    std::cout << "Роль: Продавець (Seller)\n";
+}
+
 std::ostream& operator<<(std::ostream& os, const Seller& s) {
     s.display();
     return os;

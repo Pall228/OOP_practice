@@ -15,13 +15,8 @@ void Customer::display() const {
               << "Баланс: " << balance << "\n";
 }
 
-bool Customer::operator==(const Customer& other) const {
-    return surname == other.surname &&
-           name == other.name &&
-           patronymic == other.patronymic &&
-           address == other.address &&
-           cardNumber == other.cardNumber &&
-           balance == other.balance;
+void Customer::showRole() const {
+    std::cout << "Роль: Клієнт (Customer)\n";
 }
 
 std::ostream& operator<<(std::ostream& os, const Customer& c) {

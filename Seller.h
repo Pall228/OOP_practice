@@ -23,6 +23,7 @@ public:
     const std::vector<std::string>& getGoods() const { return goods; }
 
     void display() const override;
+    void showRole() const override;  // реалізація суто віртуального методу
 };
 
 std::ostream& operator<<(std::ostream& os, const Seller& s);

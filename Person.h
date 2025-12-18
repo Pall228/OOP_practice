@@ -25,7 +25,11 @@ public:
     std::string getAddress() const { return address; }
 
     virtual void display() const;
-    virtual ~Person() = default;
+
+    // Суто віртуальний метод — робить клас абстрактним
+    virtual void showRole() const = 0;
+
+    virtual ~Person() = default;  // віртуальний деструктор обов'язковий!
 };
 
 std::ostream& operator<<(std::ostream& os, const Person& p);
